@@ -1,0 +1,25 @@
+import org.eclipse.paho.client.mqttv3.*;
+
+public class MqttPublisher {
+
+    public static void main(String[] args) {
+
+        String topic        = "test";
+        String content      = "Hello";
+        String broker       = "tcp://localhost:1883";
+        String clientId     = "JavaSample";
+        int qos = 0;
+            
+            MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
+            MqttConnectOptions connOpts = new MqttConnectOptions();
+            connOpts.setCleanSession(true);
+            System.out.println("Connecting to broker: "+broker);
+            sampleClient.connect(connOpts);
+            MqttMessage message = new MqttMessage(content.getBytes());
+            message.setQos(qos);
+            sampleClient.publish(topic, message);
+            sampleClient.disconnect();
+            sampleClient.close();
+            System.exit(0);
+            } 
+}

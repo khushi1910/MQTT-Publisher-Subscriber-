@@ -1,0 +1,31 @@
+import org.eclipse.paho.client.mqttv3.*;
+  {
+
+	private static final String brokerUrl ="tcp://localhost:1883";
+	private static final String clientId = "clientId";
+	private static final String topic = "test";
+
+	public static void main(String[] args) {
+
+		System.out.println("Subscriber running");
+		new MqttSubscriber().subscribe(topic);
+}
+
+	public void subscribe(String topic) {
+		MemoryPersistence persistence = new MemoryPersistence();
+		MqttClient sampleClient = new MqttClient(brokerUrl, clientId, persistence);
+		MqttConnectOptions connOpts = new MqttConnectOptions();
+		connOpts.setCleanSession(true);
+		sampleClient.setCallback(this);
+		sampleClient.subscribe(topic);
+
+
+	public void messageArrived(String topic, MqttMessage message) 
+	{
+
+		System.out.println("Topic:" + topic);
+		System.out.println("Message: " +message.toString())
+
+	}
+
+}
